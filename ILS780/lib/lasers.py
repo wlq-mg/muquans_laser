@@ -33,7 +33,8 @@ class Diode(_BaseAPI):
 
     @property
     def is_enabled(self) -> bool:
-        """ Status of the laser diode. OK :  Laser diode emits ; KO :  Laser diode does not emit."""
+        """ Status of the laser diode. 
+        Laser diode emits or not."""
         laser = short_name(self.laser)
         value = f"Enable_Current_Laser_Diode_{laser}"
         return self._get_value(value)
@@ -71,7 +72,7 @@ class Diode(_BaseAPI):
 
 class MasterDiode(Diode):
     
-    def __init__(self, api):
+    def __init__(self, api: API):
         self.api = api
         self.laser = "master"
 
@@ -81,6 +82,14 @@ class MasterDiode(Diode):
         using the temperature parameters offset.
         """
         self._run_action(f'diode_autolock', state)
+
+    @property
+    def is_locked(self) -> bool:
+        """ Status of the laser diode frequency lock."""
+        laser = short_name(self.laser)
+        value = f"Switch_Loop_Freq_Lock_{laser}"
+        res = self.api.get(f"/system/monitoring/values/{value}")
+        return bool(res['val'])
 
     @property
     def interlock_status(self) -> bool:
@@ -102,6 +111,14 @@ class MasterDiode(Diode):
         return self._get_value('master_integ_error')
 
 class SlaveDiode(Diode):
+
+    @property
+    def is_locked(self) -> bool:
+        """ Status of the slave diode phase lock."""
+        laser = short_name(self.laser)
+        value = f"Switch_Loop_Phase_Lock_{laser}"
+        res = self.api.get(f"/system/monitoring/values/{value}")
+        return bool(res['val'])
 
     @property
     def pll_error(self) -> float:
