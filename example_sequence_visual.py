@@ -1,6 +1,5 @@
 from ILS780 import *
 
-
 if __name__ == '__main__':
 
     sequence = Sequence()

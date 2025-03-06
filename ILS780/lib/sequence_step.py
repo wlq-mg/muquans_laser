@@ -1,9 +1,6 @@
 from .sequence_models import Models
 import numpy as np
 
-
-
-
 class SequencerStep:
     """Represents a single step in a sequence."""
 

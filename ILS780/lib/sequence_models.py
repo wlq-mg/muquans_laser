@@ -16,7 +16,13 @@ class Models:
         from_ : float
         to_ :float
         
-        value = property(lambda self: {"type": "RAMP_DDS", "from": self.from_, "to": self.to_})
+        @property
+        def value(self):
+            return {
+                "type": "RAMP_DDS", 
+                "from": self.from_, 
+                "to": self.to_
+                }
 
     @dataclass
     class RampAO(Model):
@@ -25,16 +31,25 @@ class Models:
         to_ :float
         samples: int
         
-        value = property(lambda self: {"type": "RAMP_AO", "from": self.from_, "to": self.to_, "samples": self.samples})
+        @property
+        def value(self):
+            return {
+                "type": "RAMP_AO", 
+                "from": self.from_, 
+                "to": self.to_, 
+                "samples": self.samples
+                }
 
     @dataclass
     class Linear(Model):
         """ Ramp model for the AOMs."""
         from_ : float
         to_ :float
-        samples: int 
-        
-        value = property(lambda self: np.linspace(self.from_, self.to_, self.samples, dtype=float))
+        samples: int
+
+        @property
+        def value(self):
+            return np.linspace(self.from_, self.to_, self.samples, dtype=float)
 
     @dataclass
     class Exponential(Model):

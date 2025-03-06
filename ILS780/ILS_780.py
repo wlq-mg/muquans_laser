@@ -1,7 +1,7 @@
 from .lib.API            import ApiV1 as API
 from .lib.configuration  import SLAVE1, SLAVE2, SLAVE3
 from .lib.lasers         import MasterDiode, SlaveDiode
-from .lib.sequence      import Sequence, SequencerStep
+from .lib.sequence       import Sequence
 
 MHz = 1e6
 

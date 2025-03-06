@@ -1,14 +1,11 @@
 from ILS780 import *
 
-
-
 if __name__ == '__main__':
     laser = ILS780()
 
     sequence = laser.sequence
 
     samples = 100
-
 
     step = SequencerStep(1)
     step.add_value(SLAVE3.REPUMPER_AOM.power, 100)
@@ -27,7 +24,7 @@ if __name__ == '__main__':
     step.add_value(SLAVE3.REPUMPER_AOM.power, Models.Linear(0,100, samples))
     step.add_value(SLAVE3.REPUMPER_AOM.switch, True)
 
-    sequence+=step
+    sequence += step
 
     laser.run_sequence(False, 1, True)
 
