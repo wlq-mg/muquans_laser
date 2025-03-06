@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import numpy as np
 
 class classproperty(object):
+    """ A decorator for class properties. """
     def __init__(self, f):
         self.f = f
     def __get__(self, obj, owner):
@@ -46,7 +47,7 @@ class SlaveConfig:
         """
         f = np.abs(cls.F_BEAT + det - aom.frequency) / (cls.C*2)
         cls.check_frequency(f, aom, det)
-        return f
+        return float(f)
 
     @classmethod
     def freq2det(cls, f:float, aom:AOM) -> float:
@@ -55,7 +56,7 @@ class SlaveConfig:
             det = (aom.frequency - cls.F_BEAT) - 2*cls.C*f
         else:
             det = (aom.frequency - cls.F_BEAT) + 2*cls.C*f 
-        return det
+        return float(det)
 
     @classmethod
     def detuning_range_MHz(cls, aom:AOM) -> tuple:
@@ -118,4 +119,3 @@ if __name__ == '__main__':
                 SLAVE3.REPUMPER_AOM]:
         _min, _max = SLAVE3.detuning_range_MHz(aom)
         print(f"{aom.name:<20}: [{_min} , {_max}] MHz")
-
